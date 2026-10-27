@@ -1,0 +1,20 @@
+__pycache__/
+*.py[cod]
+venv/
+.venv/
+env/
+.env
+.env.*
+!.env.example
+chroma_db/
+**/chroma_db/
+*.log
+.vscode/
+.DS_Store
+Thumbs.db
+# Ignore local PDF documents
+data/
+# Local backup
+app_backup_before_resume.py
+# Local agent configuration
+.agents/
