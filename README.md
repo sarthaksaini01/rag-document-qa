@@ -20,6 +20,10 @@ Instead of relying only on the model's general knowledge, the application search
 - Display source document and page information.
 - Avoid indexing identical PDFs more than once.
 
+## 📸 Application Demo
+
+![RAG Document Q&A Application](screenshots/rag-app-demo.png)
+
 ## 🛠️ Technologies Used
 
 - **Language:** Python
