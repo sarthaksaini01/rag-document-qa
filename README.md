@@ -137,6 +137,10 @@ The current evaluation uses four test questions: three about MySQL concepts and 
 These results apply only to the current test set. Keyword matching is a basic evaluation method and does not guarantee factual correctness or detect every hallucination.
 
 The cosine-distance threshold is a configurable heuristic and may need adjustment for other documents and questions.
+## Application Screenshot
+
+![RAG Document Q&A application](screenshots/rag-app-demo.png)
+
 
 ## Project Structure
 
@@ -144,18 +148,17 @@ The repository contains the application, supporting source code, and testing scr
 
 ```text
 rag-document-qa/
-Γö£ΓöÇΓöÇ app.py
-Γö£ΓöÇΓöÇ requirements.txt
-Γö£ΓöÇΓöÇ README.md
-Γö£ΓöÇΓöÇ test_setup.py
-Γö£ΓöÇΓöÇ test_retrieval.py
-Γö£ΓöÇΓöÇ evaluate_rag.py
-Γö£ΓöÇΓöÇ evaluate_answers.py
-Γö£ΓöÇΓöÇ src/
-Γö£ΓöÇΓöÇ data/
-Γö£ΓöÇΓöÇ screenshots/
-ΓööΓöÇΓöÇ chroma_db/
-```
+|-- app.py
+|-- requirements.txt
+|-- README.md
+|-- test_setup.py
+|-- test_retrieval.py
+|-- evaluate_rag.py
+|-- evaluate_answers.py
+|-- src/
+|-- data/
+|-- screenshots/
+`-- chroma_db/
 
 Some directories, such as `venv/` and `chroma_db/`, may be created locally and may not be included in the Git repository.
 
