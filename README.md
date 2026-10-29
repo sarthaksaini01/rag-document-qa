@@ -1,58 +1,60 @@
-# 📚 RAG-Based Document Question Answering System
+# RAG-Based Document Question Answering System
 
 A Python-based application that allows users to upload PDF documents and ask questions about their content using Retrieval-Augmented Generation (RAG).
 
-## 🚀 Overview
+The application retrieves relevant passages from indexed documents and uses a locally running Large Language Model (LLM) to generate context-aware answers with source information.
 
-This project combines semantic search with a Large Language Model (LLM) to retrieve relevant information from PDF documents and generate context-aware answers.
+## Features
 
-Instead of relying only on the model's general knowledge, the application searches the uploaded document for relevant text and uses that information to answer questions.
-
-## ✨ Features
-
-- Upload PDF documents through a Streamlit interface.
+- Upload PDF documents through a Streamlit web interface.
 - Extract text from PDFs using PyPDF.
-- Split document text into overlapping chunks.
-- Generate text embeddings using Sentence Transformers.
-- Store document chunks and embeddings in ChromaDB.
-- Retrieve relevant document sections using semantic similarity.
-- Generate answers using a local language model through Ollama.
+- Split extracted text into overlapping chunks.
+- Generate embeddings using Sentence Transformers.
+- Store and search document chunks with ChromaDB.
+- Generate answers using a local Ollama language model.
 - Display source document and page information.
 - Avoid indexing identical PDFs more than once.
+- Evaluate retrieval quality and basic answer quality.
+- Abstain from answering when retrieved document content is insufficiently relevant.
 
-## 🛠️ Technologies Used
+## Technologies Used
 
-- **Language:** Python
-- **Frontend:** Streamlit
-- **PDF Processing:** PyPDF
-- **Embeddings:** Sentence Transformers (`all-MiniLM-L6-v2`)
-- **Vector Database:** ChromaDB
-- **Language Model Runtime:** Ollama
-- **LLM:** Qwen 2.5 1.5B
+| Component | Technology |
+|---|---|
+| Programming language | Python |
+| User interface | Streamlit |
+| PDF text extraction | PyPDF |
+| Embedding model | `all-MiniLM-L6-v2` |
+| Vector database | ChromaDB |
+| Local LLM runtime | Ollama |
+| Language model | `qwen2.5:1.5b` |
 
-## ⚙️ How It Works
+## How It Works
 
 1. The user uploads a PDF document.
 2. The application extracts readable text from the PDF.
-3. The extracted text is divided into smaller, overlapping chunks.
+3. The text is divided into smaller, overlapping chunks.
 4. Sentence Transformers converts the chunks into vector embeddings.
 5. ChromaDB stores the chunks, embeddings, and document metadata.
-6. When a user asks a question, the application creates an embedding for the query.
-7. ChromaDB retrieves the most relevant document chunks.
-8. Ollama generates an answer using the retrieved context.
-9. The application displays the answer and source-page information.
+6. A user submits a question through the Streamlit interface.
+7. The question is converted into an embedding.
+8. ChromaDB retrieves semantically relevant document chunks.
+9. A relevance threshold filters out chunks that are too dissimilar.
+10. Ollama generates an answer using the retrieved context.
+11. The application displays the answer and available source-page information.
 
-## 📋 Prerequisites
+If no chunks pass the relevance threshold, the evaluation workflow abstains instead of calling the LLM.
 
-Before running the project, install:
+## Prerequisites
 
-- Python 3.10 or a compatible Python version supported by the dependencies.
+Install the following before running the application:
+
+- Python compatible with the project's dependencies.
 - Git.
 - Ollama.
+- Sufficient memory and disk space for the embedding model and local LLM.
 
-You will also need sufficient memory and disk space to run the embedding model and local language model.
-
-## 🔧 Installation and Setup
+## Installation and Setup
 
 ### 1. Clone the repository
 
@@ -61,9 +63,9 @@ git clone https://github.com/sarthaksaini01/rag-document-qa.git
 cd rag-document-qa
 ```
 
-### 2. Create a virtual environment
+### 2. Create and activate a virtual environment
 
-**Windows:**
+Windows PowerShell:
 
 ```powershell
 python -m venv venv
@@ -72,79 +74,161 @@ python -m venv venv
 
 ### 3. Install dependencies
 
-```bash
-pip install -r requirements.txt
+```powershell
+python -m pip install -r requirements.txt
 ```
 
-### 4. Install and start Ollama
+### 4. Download the Ollama model
 
 Install Ollama from its official website:
 
 https://ollama.com/
 
-Download the model used by the application:
+Then run:
 
-```bash
+```powershell
 ollama pull qwen2.5:1.5b
 ```
 
-Make sure Ollama is running before starting the application.
+Ensure Ollama is running before using the application.
 
-### 5. Run the application
+### 5. Start the application
 
-```bash
-streamlit run app.py
+From the directory containing `app.py`, run:
+
+```powershell
+python -m streamlit run app.py
 ```
 
-Open the local URL shown in the terminal, usually:
+Open the local URL printed in the terminal. It is usually:
 
 `http://localhost:8501`
 
-## 📖 Usage
+## Usage
 
-1. Open the application in your browser.
-2. Upload one or more PDF documents using the sidebar.
-3. Click **Index uploaded PDFs**.
-4. Enter a question related to the indexed documents.
-5. Read the generated answer and inspect the source-page references.
+1. Start the Streamlit application.
+2. Upload a PDF using the interface.
+3. Index the uploaded document using the application's indexing control.
+4. Enter a question about the document.
+5. Review the generated answer.
+6. Check the source document and page information to verify the answer.
 
-## 📁 Project Structure
+## Evaluation
+
+The project includes scripts for testing retrieval and generated answers.
+
+Run the answer evaluation script from the directory containing `evaluate_answers.py`:
+
+```powershell
+python .\evaluate_answers.py
+```
+
+The current evaluation uses four test questions: three about MySQL concepts and one unrelated question about quantum mechanics.
+
+### Latest Recorded Results
+
+| Metric | Result |
+|---|---:|
+| Test questions | 4 |
+| Expected-page checks | 3/3 |
+| Keyword checks | 3/3 |
+| Out-of-scope abstention checks | 1/1 |
+
+These results apply only to the current test set. Keyword matching is a basic evaluation method and does not guarantee factual correctness or detect every hallucination.
+
+The cosine-distance threshold is a configurable heuristic and may need adjustment for other documents and questions.
+
+## Project Structure
+
+The repository contains the application, supporting source code, and testing scripts. The exact directory layout may vary depending on the local project version.
 
 ```text
 rag-document-qa/
 ├── app.py
 ├── requirements.txt
+├── README.md
 ├── test_setup.py
+├── test_retrieval.py
+├── evaluate_rag.py
+├── evaluate_answers.py
 ├── src/
-└── .gitignore
+├── data/
+├── screenshots/
+└── chroma_db/
 ```
 
-The exact contents of the `src/` directory depend on the project files included in the repository.
+Some directories, such as `venv/` and `chroma_db/`, may be created locally and may not be included in the Git repository.
 
-## 🔍 Key Concepts Demonstrated
+## Key Concepts Demonstrated
 
 - Retrieval-Augmented Generation (RAG)
+- PDF text extraction
 - Text chunking and overlap
 - Semantic search
-- Text embeddings
-- Vector databases
-- Large Language Model integration
-- PDF processing
-- Interactive application development with Streamlit
+- Vector embeddings
+- Vector database storage and retrieval
+- Local LLM integration
+- Source attribution
+- Relevance thresholding
+- Basic retrieval and answer evaluation
 
-## ⚠️ Limitations
+## Limitations
 
-- Answer quality depends on the text extracted from the PDF and the relevance of retrieved chunks.
-- Scanned PDFs may require OCR before their text can be searched.
+- Answer quality depends on PDF text extraction and the relevance of retrieved chunks.
+- Scanned PDFs may require OCR.
+- A relevance threshold can reject useful chunks or accept irrelevant ones.
+- Keyword-based evaluation does not establish factual correctness.
 - Local model performance depends on available system resources.
-- The application is designed to answer from retrieved document context; answers should be checked against the cited source pages.
+- Users should verify generated answers against the cited source pages.
 
-## 👨‍💻 Author
+## Author
 
 **Sarthak Saini**
 
 GitHub: https://github.com/sarthaksaini01
+```
+
+**Note:** Agar tumhare actual project mein `evaluate_rag.py` ya koi aur listed file nahi hai, toh README mein us file ka naam add karne se pehle verify kar lena.
+
+## Step 3 — File save karo
+
+VS Code mein:
+
+1. `Ctrl + S` dabao.
+2. README mein headings aur code blocks check karo.
+3. Confirm karo ki emojis ke broken characters ab nahi dikh rahe.
+
+## Step 4 — README verify karo
+
+PowerShell mein run karo:
+
+```powershell
+Get-Content .\README.md -TotalCount 40
+```
+
+Isse README ki pehli 40 lines dikhengi.
 
 ---
 
-⭐ If you find this project useful, feel free to explore the code and suggest improvements.
+## Step 5 — GitHub par changes check karo
+
+Agar project Git repository hai, toh ye command chalao:
+
+```powershell
+git status
+```
+
+Ye batayega ki README aur doosri files mein kaun-se changes hain.
+
+**Abhi `git add`, `git commit` ya `git push` mat karna.** Pehle README verify kar lete hain.
+
+### Tumhara next task
+
+README replace karke save karo, phir ye commands chalao:
+
+```powershell
+Get-Content .\README.md -TotalCount 40
+git status
+```
+
+Dono commands ka output bhejo. Uske baad hum GitHub par changes safely publish karne ki taiyari karenge.
