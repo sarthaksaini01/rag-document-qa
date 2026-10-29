@@ -1,4 +1,4 @@
-# RAG-Based Document Question Answering System
+﻿# RAG-Based Document Question Answering System
 
 A Python-based application that allows users to upload PDF documents and ask questions about their content using Retrieval-Augmented Generation (RAG).
 
@@ -144,17 +144,17 @@ The repository contains the application, supporting source code, and testing scr
 
 ```text
 rag-document-qa/
-├── app.py
-├── requirements.txt
-├── README.md
-├── test_setup.py
-├── test_retrieval.py
-├── evaluate_rag.py
-├── evaluate_answers.py
-├── src/
-├── data/
-├── screenshots/
-└── chroma_db/
+Γö£ΓöÇΓöÇ app.py
+Γö£ΓöÇΓöÇ requirements.txt
+Γö£ΓöÇΓöÇ README.md
+Γö£ΓöÇΓöÇ test_setup.py
+Γö£ΓöÇΓöÇ test_retrieval.py
+Γö£ΓöÇΓöÇ evaluate_rag.py
+Γö£ΓöÇΓöÇ evaluate_answers.py
+Γö£ΓöÇΓöÇ src/
+Γö£ΓöÇΓöÇ data/
+Γö£ΓöÇΓöÇ screenshots/
+ΓööΓöÇΓöÇ chroma_db/
 ```
 
 Some directories, such as `venv/` and `chroma_db/`, may be created locally and may not be included in the Git repository.
@@ -190,7 +190,7 @@ GitHub: https://github.com/sarthaksaini01
 
 **Note:** Agar tumhare actual project mein `evaluate_rag.py` ya koi aur listed file nahi hai, toh README mein us file ka naam add karne se pehle verify kar lena.
 
-## Step 3 — File save karo
+## Step 3 ΓÇö File save karo
 
 VS Code mein:
 
@@ -198,7 +198,7 @@ VS Code mein:
 2. README mein headings aur code blocks check karo.
 3. Confirm karo ki emojis ke broken characters ab nahi dikh rahe.
 
-## Step 4 — README verify karo
+## Step 4 ΓÇö README verify karo
 
 PowerShell mein run karo:
 
@@ -210,7 +210,7 @@ Isse README ki pehli 40 lines dikhengi.
 
 ---
 
-## Step 5 — GitHub par changes check karo
+## Step 5 ΓÇö GitHub par changes check karo
 
 Agar project Git repository hai, toh ye command chalao:
 
