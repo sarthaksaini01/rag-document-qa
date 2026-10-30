@@ -2,4 +2,4 @@ chromadb
 sentence-transformers
 pypdf
 streamlit
-ollama
+groq
