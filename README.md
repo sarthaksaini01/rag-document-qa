@@ -1,4 +1,5 @@
-﻿# RAG-Based Document Question Answering System
+🚀 **Live Demo:** [Open RAG Document Q&A App](https://rag-document-app-rrawtru3plvj7nojl5kqip.streamlit.app/)
+ # RAG-Based Document Question Answering System
 
 A Python-based application that allows users to upload PDF documents and ask questions about their content using Retrieval-Augmented Generation (RAG).
 
