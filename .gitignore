@@ -18,3 +18,4 @@ data/
 app_backup_before_resume.py
 # Local agent configuration
 .agents/
+.streamlit/secrets.toml

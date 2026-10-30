@@ -3,9 +3,8 @@ from pathlib import Path
 import hashlib
 import io
 import time
-
+from groq import Groq
 import chromadb
-import ollama
 import streamlit as st
 from pypdf import PdfReader
 from sentence_transformers import SentenceTransformer
@@ -21,7 +20,7 @@ DB_DIR = BASE_DIR / "chroma_db"
 
 EMBEDDING_MODEL = "all-MiniLM-L6-v2"
 LLM_MODEL = "qwen2.5:1.5b"
-
+GROQ_MODEL = "openai/gpt-oss-20b"
 CHUNK_SIZE = 500
 CHUNK_OVERLAP = 50
 TOP_K = 3
@@ -472,29 +471,21 @@ Answer:
 
                     start_time = time.time()
 
-                    response = ollama.chat(
-                        model=LLM_MODEL,
+                    response = Groq(
+                        api_key=st.secrets["GROQ_API_KEY"]
+                    ).chat.completions.create(
+                        model=GROQ_MODEL,
                         messages=[
                             {
                                 "role": "user",
                                 "content": prompt
                             }
                         ],
-                        options={
-                            "num_predict": 150,
-                            "temperature": 0.2
-                        },
-                        keep_alive="10m"
+                        max_tokens=150,
+                        temperature=0.2,
                     )
-
-                    print(
-                        f"Ollama answer generation time: "
-                        f"{time.time() - start_time:.2f} seconds"
-                    )
-
-                    answer = response[
-                        "message"
-                    ]["content"]
+                    answer = response.choices[0].message.content
+                       
 
                     st.markdown(answer)
 
